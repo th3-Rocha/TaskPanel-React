@@ -1,73 +1,90 @@
-# O-Projeto-Super-Painel-de-Tarefas
-Um painel de tarefas que tem tarefas por prioridade (Urgente ⚡, Alta 🔴, Média 🟡 e Baixa 🟢).
+# TaskPanel-React (Super Task Panel)
 
-## Instruções de Configuração
+A task panel built with **React + Next.js (App Router)** to practice and study React concepts while building a small real-world UI.
 
-Para configurar o projeto, siga os passos abaixo:
+Tasks are organized by priority:
+- Urgent ⚡
+- High 🔴
+- Medium 🟡
+- Low 🟢
 
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/th3-Rocha/opspaineltarefas.git
-   
-2. **Instale as dependências:**
-    
-    Navegue até a pasta do projeto e instale as dependências utilizando npm.
-    
-    Usando npm:
-        
-    ```bash
-    npm install
-3. **Configure o mockAPI e o Google OAuth2.0 :**
+## Backend (for studying React)
 
-    Crie uma coleção de users com os seguintes campos:
-        
-        id: identificador único do usuário (string).
-    
-        sub: campo do tipo string, identificador do Google OAuth.
-    
-    Crie uma coleção de tasks com os seguintes campos, as tasks são filho dos users:
-        
-        name: nome da tarefa (string).
-        
-        prior: prioridade da tarefa de 1 a 4 (string).
-        
-        checked: status da tarefa (booleano, indicando se está marcada como concluída ou não).
-        
-        id: identificador único da tarefa (string).
-        
-        userId: o id do usuário ao qual a tarefa pertence (string).
+This project uses a **simple backend / mock API** only to **study React** with CRUD operations (create, read, update, delete).
 
+The frontend communicates with the backend via HTTP requests using:
 
-    Em seguida, vá para o site https://console.cloud.google.com, crie um novo projeto e, em seguida, acesse a tela de permissões OAuth. Nessa tela, insira a URL da página inicial do projeto e adicione os endereços de e-mail dos usuários que terão acesso ao Google OAuth.
-        
+- `NEXT_PUBLIC_MOCK_API_SECRET` (base URL used by the fetch calls)
+- Endpoints such as:
+  - `POST /users` (create a user using Google `sub`)
+  - `GET /users?sub=...` (find a user)
+  - `GET /users/:id/tasks` (list tasks)
+  - `POST /users/:id/tasks` (create a task)
+  - `PUT /users/:id/tasks/:taskId` (edit a task)
+  - `DELETE /users/:id/tasks/:taskId` (remove a task)
 
+So: **the backend is not the main focus** — it exists only to support learning React by persisting tasks.
 
-4. **Variáveis de Ambiente:**
+## Features
 
-    O projeto tem variáveis de ambiente, do google OAuth e do mockAPI, crie um arquivo .env na raiz do projeto e adicione as variáveis necessárias:
+- Google Login (OAuth) using `@react-oauth/google`
+- Protected tasks page (redirects to `/` if the token is missing/invalid)
+- Task CRUD via mock backend
+- Sorting tasks by:
+  - Priority (descending) OR
+  - Checked status
+- Styled with Tailwind CSS
 
-    ```bash
-    # Google OAuth2 Client ID
-    GOOGLE_CLIENT_ID = ex:....................apps.googleusercontent.com
-    
-    # Mock API projectSecret 
-    NEXT_PUBLIC_MOCK_API_SECRET = ex:...........................mockapi.io/supertodo
-    
-5. **Execute o Projeto**
+## Tech Stack
 
-    Inicie o Front-End: No diretório do src, execute:
-    
-        
-        npm run dev
-        
-6. **Bonus Implementados**
+- **Next.js** (App Router)
+- **React**
+- **TypeScript**
+- **Tailwind CSS**
+- Google OAuth (`@react-oauth/google`)
 
-    1. Login e Autenticação: Implementei autenticação com OAuth2 usando Google.
+## Getting Started
 
-    2. API Externa: Integrei com uma API externa, o mockapi.io.
-    
-7. **Links Relevantes**
-    1. Projeto no mockAPI: https://mockapi.io/clone/67686047cbf3d7cefd37cb22
-    2. live no Netlify(não funciona o Google OAuth): https://superpaineltarefas.netlify.app/
+### 1) Install dependencies
+```bash
+npm install
+```
 
-        
+### 2) Configure environment variables
+
+Create a `.env.local` file in the project root:
+
+```env
+GOOGLE_CLIENT_ID=your_google_oauth_client_id
+NEXT_PUBLIC_MOCK_API_SECRET=https://your-mock-api-url
+```
+
+**Notes**
+- `GOOGLE_CLIENT_ID` is required by the Google OAuth Provider.
+- `NEXT_PUBLIC_MOCK_API_SECRET` must be a reachable API base URL (mock server, json-server, etc.).
+
+### 3) Run the project
+```bash
+npm run dev
+```
+
+Then open:
+- http://localhost:3000
+
+## Pages
+
+- `/` → Login page
+- `/tasks` → Task panel (requires a Google access token stored in `sessionStorage`)
+
+## Project Goal
+
+This repository is mainly for **studying React**:
+- component composition
+- state and effects
+- client-side navigation
+- API integration (fetch + async flows)
+- UI behavior (modals, editing, sorting)
+
+---
+
+Made for learning and experimentation.
